@@ -1,4 +1,6 @@
 #include<iostream>
+#include<cstdlib> 
+#include<ctime>
 using namespace std;
 
 void inicializarTablero(char tablero[6][6]){
@@ -7,9 +9,13 @@ void inicializarTablero(char tablero[6][6]){
 			tablero[i][j] = '~';
 		}
 	}
-	tablero[2][1] = 'B';
-	tablero[2][2] = 'B';
-	tablero[2][3] = 'B';
+	srand(time(0));
+	int filaBarco = rand() % 6;
+	int columnaInicio = rand() % 4;
+    tablero[filaBarco][columnaInicio] = 'B';
+    tablero[filaBarco][columnaInicio + 1] = 'B';
+    tablero[filaBarco][columnaInicio + 2] = 'B';
+    cout<<"Barco colocado en una posicion al azar\n";
 }
 
 void mostrarTablero(const char tablero[6][6]){
@@ -41,8 +47,12 @@ void disparar(char tablero[6][6], int fila, int columna){
 }
 
 bool hundido(const char tablero[6][6]){
-	if (tablero[2][1] == 'X' && tablero[2][2] == 'X' && tablero[2][3] == 'X'){
-		return true;
+	for (int i=0; i<6; i++){
+		for (int j=0; j<4; j++){
+			if (tablero[i][j] == 'X' && tablero[i][j+1] == 'X' && tablero[i][j+2] == 'X'){
+				return true;
+			}
+		}
 	}
 	return false;
 }
@@ -73,3 +83,4 @@ int main(){
 	
 	return 0;
 }
+
